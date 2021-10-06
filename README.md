@@ -67,10 +67,8 @@ So this is where this matcher library comes in.</br>
 
 | CustomerOfBankA   |CustomerOfBankB |
 | ------------------ | ---------------- |
-| Field  | Accessor | Field | Accessor |
-| ------- |---------- | ------- | -------- |
-| name | getName | customerName | getCustomerName |
-| govIssuedIdNo | getGovIssuedIdNo | govID | getGovID |
+| name | customerName  |
+| govIssuedIdNo | govID  |
 
 ````
 var specifications = new MatcherSpecifications<CustomerOfBankA, CustomerOfBankB>() {
