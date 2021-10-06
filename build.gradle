@@ -1,0 +1,51 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group 'codes.sen'
+version '1.0.1'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+
+    implementation 'org.hibernate:hibernate-validator:6.0.13.Final'
+    implementation 'codes.sen:utility:1.0.1'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+java {
+    withSourcesJar()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+task 'localPublish ' {
+    dependsOn 'clean'
+    dependsOn 'build'
+    dependsOn 'publishToMavenLocal'
+    tasks.findByName('build').mustRunAfter 'clean'
+    tasks.findByName('publishToMavenLocal').mustRunAfter 'build'
+}
