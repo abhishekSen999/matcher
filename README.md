@@ -64,6 +64,7 @@ So this is where this matcher library comes in.</br>
 1. First we will need a MatcherSpecification ,  specifying which fields to match with it's counterpart.
 
     We are trying to match
+
 | CustomerOfBankA   |CustomerOfBankB |
 | ------------------ | ---------------- |
 | Field  | Accessor | Field | Accessor |
