@@ -18,8 +18,8 @@ public class Matched<L, R> {
 
 
     /**
-     * @param leftObjectType  All Left Objects should be of <code>Class<? extends leftObjectType><code/>
-     * @param rightObjectType All Right Objects should be of <code>Class<? extends rightObjectType><code/>
+     * @param leftObjectType  All Left Objects should be of {@code Class<? extends leftObjectType>}
+     * @param rightObjectType All Right Objects should be of {@code Class<? extends rightObjectType>}
      */
     public Matched(@NotNull Class<L> leftObjectType, @NotNull Class<R> rightObjectType) {
 

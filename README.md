@@ -1,7 +1,7 @@
 Matcher
 =======
 
-Matcher is a utility tool used to match List of objects of 2 different classes based on Specified set of Field accessors provided in form of MatcherSpecifications.<br/>
+Matcher is a utility tool used to match List of objects of 2 different classes based on Specified list of Field accessors provided in form of MatcherSpecifications.<br/>
 Currently it uses a ProxyBasedMatcher to achieve this, where the equals and hashCode functions are overridden dynamically based on provided specifications.
 
 Example
