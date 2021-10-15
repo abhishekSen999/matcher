@@ -100,7 +100,7 @@ Here LeftType is CustomerOfBankA  and RightType is CustomerOfBankB</br>
 2.  Then we would need a just Matcher
 
 ````
-Matcher<CustomerOfBankA, CustomerOfBankB> matcher =  new ProxyBasedMatcher<CustomerOfBankA, CustomerOfBankB>();
+Matcher<CustomerOfBankA, CustomerOfBankB> matcher =  Matcher.newInstance(CustomerOfBankA.class , CustomerOfBankB.class);
 ````
 
 3. The Final Step would be to match 
