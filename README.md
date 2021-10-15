@@ -4,6 +4,16 @@ Matcher
 Matcher is a utility tool used to match List of objects of 2 different classes based on Specified list of Field accessors provided in form of MatcherSpecifications.<br/>
 Currently it uses a ProxyBasedMatcher to achieve this, where the equals and hashCode functions are overridden dynamically based on provided specifications.
 
+Dependency
+----------
+
+````
+<dependency>
+   <groupId>codes.sen</groupId>
+   <artifactId>matcher</artifactId>
+</dependency>
+````
+
 Example
 -------
 Lets say there are 2 banks BANK_A & BANK_B ,  they underwent a merger now their customer bases needs to be merged.</br>
