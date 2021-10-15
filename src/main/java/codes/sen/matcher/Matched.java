@@ -7,7 +7,13 @@ import java.util.List;
 
 import codes.sen.utility.Assert;
 
-//todo documentation
+/**
+ * A Collection to hold objects of two nonAssignable {@code Classes}.
+ * That is both {@link Class#isAssignableFrom(Class) L.isAssignableFrom(R)} and {@link Class#isAssignableFrom(Class) R.isAssignableFrom(L)}
+ * should return false.
+ * @param <L> leftType
+ * @param <R> rightType
+ */
 public class Matched<L, R> {
 
     private List<L> leftObjects;
@@ -32,7 +38,13 @@ public class Matched<L, R> {
     }
 
 
-    //todo documentation
+    /**
+     * Add a new {@link Object} to the matched collection. Addition will be successful if the object actually
+     * belongs to {@code LeftObjectType} or {@code RightObjectType} specified during instantiation of {@link Matched}.
+     * If addition is possible based on above condition , it will get added to the designated {@link List} based on its type.
+     * @param o {@link Object} to be added.
+     * @return {@code true} if object addition is successful.
+     */
     public boolean add(Object o) {
 
         if (this.leftType.isAssignableFrom(o.getClass())) {
@@ -46,12 +58,18 @@ public class Matched<L, R> {
     }
 
 
-    //todo documentation
+    /**
+     *
+     * @return the {@link List} of {@code LeftType} objects.
+     */
     public List<L> getLeftObjects(){
         return leftObjects;
     }
 
-    //todo documentation
+    /**
+     *
+     * @return the {@link List} of {@code RightType} objects.
+     */
     public List<R> getRightObjects(){
         return rightObjects;
     }
@@ -64,13 +82,23 @@ public class Matched<L, R> {
                 '}';
     }
 
-    //todo documentation
+    /**
+     *
+     * @return {@code true} if {@code this} instance of {@link Matched} has objects of both types.
+     */
     public boolean hasBothLeftAndRight(){
         return ! (leftObjects.isEmpty() || rightObjects.isEmpty());
     }
 
-    //todo documentation
+    /**
+     * Factory  method to create a new instance of {@link Matched} from {@link MatcherSpecifications}
+     * @param specs {@link MatcherSpecifications} to be used to create the instance of {@link Matched}
+     * @param <L> leftType
+     * @param <R> rightType
+     * @return a new instance of {@link Matched}
+     */
     public static final <L,R> Matched<L,R> getNewMatched(MatcherSpecifications<L , R> specs){
         return new Matched<L,R>(specs.getClassOfLeftType() , specs.getClassOfRightType());
     }
+
 }

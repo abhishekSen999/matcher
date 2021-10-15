@@ -11,6 +11,13 @@ import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * {@code EqualsAndHashCodeOverrideForMatching} is an InvocationHandler that dynamically overrides {@code equals}
+ * and {@code hashCode} functions  and a few other functions to facilitate Matching of objects using hashing.
+ * @param <T> Type of object whose {@code equals} and {@code hashCode} is overridden by {@link EqualsAndHashCodeOverrideForMatching}
+ * @see codes.sen.matcher.Matcher
+ * @see codes.sen.matcher.ProxyBasedMatcher
+ */
 @Slf4j
 public class EqualsAndHashCodeOverrideForMatching<T> implements InvocationHandler {
 
@@ -126,6 +133,10 @@ public class EqualsAndHashCodeOverrideForMatching<T> implements InvocationHandle
         return Arrays.equals(fieldsToConsiderForThisTarget,fieldsOfObj);
     }
 
+    /**
+     * {@code ProxiedDataHolder} is an interface to facilitate dynamic overriding of Equals and hashCode function for {@link EqualsAndHashCodeOverrideForMatching}
+     * @param <T> Type of object whose {@code equals} and {@code hashCode} is overridden by {@link EqualsAndHashCodeOverrideForMatching}
+     */
     public interface ProxiedDataHolder<T> {
         public T getProxiedTarget();
 

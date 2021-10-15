@@ -7,13 +7,29 @@ import java.lang.reflect.Proxy;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ProxyBasedMatcher<L, R> implements Matcher<L, R> {
+/**
+ * An implementation of {@link Matcher} which dynamically overrides {@code equals} and {@code hashCode}
+ * functions using DynamicProxies and uses hashing to match the objects bases on provided {@link MatcherSpecifications}.
+ *
+ * @param <L>
+ * @param <R>
+ * @see EqualsAndHashCodeOverrideForMatching
+ * @see MatcherSpecifications
+ */
+class ProxyBasedMatcher<L, R> implements Matcher<L, R> {
 
     Collection<Matched> matched;
 
     public static final int MAP_SIZE_MULTIPLICATION_FACTOR = 100;
 
-    //todo add documentation
+    /**
+     * Matches the provided list of objects . Matching happens based on provided {@link MatcherSpecifications }<br>
+     *
+     * @param leftObjects the {@code List} of objects of LeftType
+     * @param rightObjects the {@code List} of objects of RightType
+     * @param specs {@code MatcherSpecifications} that will be used to match the LeftType objects with RightType Objects
+     * @return A Collection of {@code Matched} were each {@code Matched} contains the two lists, one of matching LeftType objects and other of matching RightType objects
+     */
     @Override
     public Collection<Matched<L,R>> match(List<L> leftObjects, List<R> rightObjects, MatcherSpecifications specs) {
         matched = new ArrayList<Matched>(Math.min(leftObjects.size(), rightObjects.size()));

@@ -3,7 +3,6 @@ package com.sen.matcher;
 import codes.sen.matcher.Matched;
 import codes.sen.matcher.Matcher;
 import codes.sen.matcher.MatcherSpecifications;
-import codes.sen.matcher.ProxyBasedMatcher;
 import lombok.Builder;
 import lombok.ToString;
 import org.junit.jupiter.api.Assertions;
@@ -56,7 +55,7 @@ public class TestProxyBasedMatcher {
         };
 
 
-        Matcher<CustomerOfBankA, CustomerOfBankB> matcher =  new ProxyBasedMatcher<CustomerOfBankA, CustomerOfBankB>();
+        Matcher<CustomerOfBankA, CustomerOfBankB> matcher =  Matcher.newInstance(CustomerOfBankA.class , CustomerOfBankB.class);
 
         Collection<Matched<CustomerOfBankA, CustomerOfBankB>> matchedObjs = matcher.match(bankACustomers, bankBCustomers, specifications);
 
