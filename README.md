@@ -110,7 +110,7 @@ Collection<Matched<CustomerOfBankA, CustomerOfBankB>> matchedObjs = matcher.matc
 ````
 
 As we can see it returns a Collection of Matched objects.</br>
-Matched holds a list of LeftType objects (here CustomerOfBankA) and a list RightType objects ( here CustomerOfBankB). This allows many to many matching .
+Matched holds a list of LeftType objects (here CustomerOfBankA) and a list of RightType objects ( here CustomerOfBankB). This allows many to many matching .
 
 
 
