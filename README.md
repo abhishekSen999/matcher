@@ -97,7 +97,7 @@ Take note of the order in which the field accessors are provided for each type.<
 Here LeftType is CustomerOfBankA  and RightType is CustomerOfBankB</br>
 
 <p/>
-2.  Then we would need a just Matcher
+2.  Then we would need a Matcher
 
 ````
 Matcher<CustomerOfBankA, CustomerOfBankB> matcher =  Matcher.newInstance(CustomerOfBankA.class , CustomerOfBankB.class);
