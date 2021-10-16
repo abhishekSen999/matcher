@@ -16,14 +16,14 @@ Dependency
 
 Example
 -------
-Lets say there are 2 banks BANK_A & BANK_B ,  they underwent a merger now their customer bases needs to be merged.</br>
+Lets say there are 2 companies COMPANY_A & COMPANY_B ,  they underwent a merger now their customer bases needs to be merged.</br>
 
-Lets say BANK_A maintained it's customers in below mentioned format
+Lets say COMPANY_A maintained it's customers in below mentioned format
 
 ````
 @Builder
 @ToString
-static class CustomerOfBankA {
+static class CustomerOfCompanyA {
     private String idInA;
     private String name;
     private String govIssuedIdNo;
@@ -41,12 +41,12 @@ static class CustomerOfBankA {
     }
 }
 ````
-And BANK_B maintained it like this:
+And COMPANY_B maintained it like this:
 
 ````
 @Builder
 @ToString
-static class CustomerOfBankB {
+static class CustomerOfCompanyA {
 
     private String idInB;
     private String customerName;
@@ -66,7 +66,7 @@ static class CustomerOfBankB {
 
 }
 ````
-For matching Classes CustomerOfBankA with CustomerOfBankB in O(n) time we would need someway to hash them , but we cannot override the actual equals(..) and hashCode() function as it would mess with other processing.<br/>
+For matching Classes CustomerOfCompanyA with CustomerOfCompanyB in O(n) time we would need someway to hash them , but we cannot override the actual equals(..) and hashCode() function as it would mess with other processing.<br/>
 So this is where this matcher library comes in.</br>
 <p/>
 
@@ -75,16 +75,16 @@ So this is where this matcher library comes in.</br>
 
     We are trying to match
 
-| CustomerOfBankA   |CustomerOfBankB |
+| CustomerOfCompanyA   |CustomerOfCompanyB |
 | ------------------ | ---------------- |
 | name | customerName  |
 | govIssuedIdNo | govID  |
 
 ````
-var specifications = new MatcherSpecifications<CustomerOfBankA, CustomerOfBankB>() {
+var specifications = new MatcherSpecifications<CustomerOfCompanyA, CustomerOfCompanyB>() {
             @Override
-            public Class<CustomerOfBankA> getClassOfLeftType() {
-                return CustomerOfBankA.class;
+            public Class<CustomerOfCompanyA> getClassOfLeftType() {
+                return CustomerOfCompanyA.class;
             }
 
             @Override
@@ -93,8 +93,8 @@ var specifications = new MatcherSpecifications<CustomerOfBankA, CustomerOfBankB>
             }
 
             @Override
-            public Class<CustomerOfBankB> getClassOfRightType() {
-                return CustomerOfBankB.class;
+            public Class<CustomerOfCompanyB> getClassOfRightType() {
+                return CustomerOfCompanyB.class;
             }
 
             @Override
@@ -104,23 +104,23 @@ var specifications = new MatcherSpecifications<CustomerOfBankA, CustomerOfBankB>
         };
 ````
 Take note of the order in which the field accessors are provided for each type.</br>
-Here LeftType is CustomerOfBankA  and RightType is CustomerOfBankB</br>
+Here LeftType is CustomerOfCompanyA  and RightType is CustomerOfCompanyB</br>
 
 <p/>
 2.  Then we would need a Matcher
 
 ````
-Matcher<CustomerOfBankA, CustomerOfBankB> matcher =  Matcher.newInstance(CustomerOfBankA.class , CustomerOfBankB.class);
+Matcher<CustomerOfCompanyA, CustomerOfCompanyB> matcher =  Matcher.newInstance(CustomerOfCompanyA.class , CustomerOfCompanyB.class);
 ````
 
 3. The Final Step would be to match 
 
 ````
-Collection<Matched<CustomerOfBankA, CustomerOfBankB>> matchedObjs = matcher.match(bankACustomers, bankBCustomers, specifications);
+Collection<Matched<CustomerOfCompanyA, CustomerOfCompanyB>> matchedObjs = matcher.match(companyACustomers, companyBCustomers, specifications);
 ````
 
 As we can see it returns a Collection of Matched objects.</br>
-Matched holds a list of LeftType objects (here CustomerOfBankA) and a list of RightType objects ( here CustomerOfBankB). This allows many to many matching .
+Matched holds a list of LeftType objects (here CustomerOfCompanyA) and a list of RightType objects ( here CustomerOfCompanyB). This allows many to many matching .
 
 
 
