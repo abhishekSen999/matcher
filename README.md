@@ -46,7 +46,7 @@ And COMPANY_B maintained it like this:
 ````
 @Builder
 @ToString
-static class CustomerOfCompanyA {
+static class CustomerOfCompanyB {
 
     private String idInB;
     private String customerName;
