@@ -9,7 +9,7 @@
     <version>1.0.0</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Matcher is a utility tool used to match List of objects of 2 different classes based on Specified list of Field accessors provided in form of MatcherSpecifications.</description>
+    <description>Matcher is a utility tool used to match List of objects of 2 different classes based on Specified list of Field names provided in form of MatcherSpecifications.</description>
     <url>https://github.com/abhishekSen999/matcher</url>
 
     <properties>
@@ -199,8 +199,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
         </plugins>

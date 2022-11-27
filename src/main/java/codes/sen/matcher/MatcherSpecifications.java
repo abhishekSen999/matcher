@@ -2,7 +2,7 @@ package codes.sen.matcher;
 
 /**
  * An Interface to provide specifications that are required for Matching objects of two different classes.<br>
- * Take note order of FieldAccessors are important.<p>
+ * Take note: order of FieldNames are important.<p>
  * Example :<br>
  * {@code ClassA{
  *     fieldX;
@@ -29,8 +29,8 @@ package codes.sen.matcher;
  *  <p>
  *  Here , say left is ClassA and right is ClassB <br>
  *  then <br>
- *  accessorsForLeft = { accessorOfFieldX , accessorOfFieldY } <br>
- *  accessorsOfRight = { accessorOfFieldP , accessorOfFieldQ }
+ *  fieldNamesForLeft = { fieldX , fieldY } <br>
+ *  fieldNamesForRight = { fieldP , fieldQ }
  * @param <L> left class
  * @param <R> right class
  * @see Matcher
@@ -40,10 +40,10 @@ public interface MatcherSpecifications<L,R> {
 
     public Class<L> getClassOfLeftType();
 
-    public String[] getFieldAccessorsForLeft();
+    public String[] getFieldsForLeft();
 
     public Class<R> getClassOfRightType();
 
-    public String[] getFieldAccessorsForRight();
+    public String[] getFieldsForRight();
 
 }

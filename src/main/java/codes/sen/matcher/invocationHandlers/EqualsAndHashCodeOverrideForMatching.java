@@ -4,10 +4,7 @@ import codes.sen.utility.Assert;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -23,9 +20,9 @@ public class EqualsAndHashCodeOverrideForMatching<T> implements InvocationHandle
 
     private T target;
 
-    private String[] accessorOfFieldsToConsiderForThisTarget;
+    private String[] fieldNamesToConsiderForThisTarget;
 
-    private String[] accessorOfFieldsToConsiderForThat; // with which this has to be matched
+    private String[] fieldNamesToConsiderForThat; // with which this has to be matched
 
     Object[] fieldsToConsiderForThisTarget;
 
@@ -46,24 +43,24 @@ public class EqualsAndHashCodeOverrideForMatching<T> implements InvocationHandle
     }
 
     //todo documentation
-    public static final Object[] fetchFieldsWithAccessors(@NotNull Object obj, @NotNull String... fieldAccessors) {
+    public static final Object[] fetchFieldsWithFieldName(@NotNull Object obj, @NotNull String... fieldNames) {
 
         Class<?> classOfObj = getClassOfObject(obj);
 
-        Object[] fields_ = new Object[fieldAccessors.length];
+        Object[] fields_ = new Object[fieldNames.length];
 
         Object targetObject = getTargetObject(obj);
 
-        for (int i = 0; i < fieldAccessors.length; i++) {
-            String accessor = fieldAccessors[i];
-            Assert.notNull(accessor, "Field Accessor cannot be null");
+        for (int i = 0; i < fieldNames.length; i++) {
+            String fieldName = fieldNames[i];
+            Assert.notNull(fieldName, "Field Name cannot be null");
 
             try {
-                Method accessorMethod = classOfObj.getMethod(accessor);
-                accessorMethod.setAccessible(true);
-                fields_[i] = accessorMethod.invoke(targetObject);
-            } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                log.error("{} occurred while invoking accessor-{} on object-{}", e.getClass(), accessor, obj);
+                Field field = classOfObj.getDeclaredField(fieldName);
+                field.setAccessible(true);
+                fields_[i] = field.get(targetObject);
+            } catch ( IllegalAccessException |  NoSuchFieldException e) {
+                log.error("{} occurred while invoking fieldName-{} on object-{}", e.getClass(), fieldName, obj);
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
@@ -76,14 +73,14 @@ public class EqualsAndHashCodeOverrideForMatching<T> implements InvocationHandle
 
     //todo documentation
     public EqualsAndHashCodeOverrideForMatching(@NotNull T target_
-            , @NotNull String[] accessorOfFieldsToConsiderForThisTarget_
-            , @NotNull String[] accessorOfFieldsToConsiderForThat_) {
+            , @NotNull String[] fieldsToConsiderForThisTarget_
+            , @NotNull String[] fieldsToConsiderForThat_) {
 
         this.target = target_;
-        this.accessorOfFieldsToConsiderForThisTarget = accessorOfFieldsToConsiderForThisTarget_;
-        this.accessorOfFieldsToConsiderForThat = accessorOfFieldsToConsiderForThat_;
+        this.fieldNamesToConsiderForThisTarget = fieldsToConsiderForThisTarget_;
+        this.fieldNamesToConsiderForThat = fieldsToConsiderForThat_;
 
-        this.fieldsToConsiderForThisTarget = fetchFieldsWithAccessors(target, accessorOfFieldsToConsiderForThisTarget);
+        this.fieldsToConsiderForThisTarget = fetchFieldsWithFieldName(target, fieldNamesToConsiderForThisTarget);
     }
 
     private int hashCodeOverride() {
@@ -119,14 +116,14 @@ public class EqualsAndHashCodeOverrideForMatching<T> implements InvocationHandle
     }
 
     private boolean equalsOverrideForSameType(Object obj){
-        Object[] fieldsOfObj =fetchFieldsWithAccessors(obj,accessorOfFieldsToConsiderForThisTarget);
+        Object[] fieldsOfObj = fetchFieldsWithFieldName(obj, fieldNamesToConsiderForThisTarget);
         return Arrays.equals(fieldsToConsiderForThisTarget,fieldsOfObj);
     }
 
     private boolean equalsOverrideForDifferentType(Object obj){
         Object[] fieldsOfObj ;
         try{
-            fieldsOfObj = fetchFieldsWithAccessors(obj , accessorOfFieldsToConsiderForThat);
+            fieldsOfObj = fetchFieldsWithFieldName(obj , fieldNamesToConsiderForThat);
         }catch (Exception e){
             return false;
         }

@@ -40,8 +40,8 @@ class ProxyBasedMatcher<L, R> implements Matcher<L, R> {
                         (ProxiedDataHolder<L>) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),
                                 new Class[]{ProxiedDataHolder.class},
                                 new EqualsAndHashCodeOverrideForMatching<L>(leftObject
-                                        , specs.getFieldAccessorsForLeft()
-                                        , specs.getFieldAccessorsForRight()))
+                                        , specs.getFieldsForLeft()
+                                        , specs.getFieldsForRight()))
                 ).collect(Collectors.toList());
 
 
@@ -50,8 +50,8 @@ class ProxyBasedMatcher<L, R> implements Matcher<L, R> {
                         (ProxiedDataHolder<R>) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),
                                 new Class[]{ProxiedDataHolder.class},
                                 new EqualsAndHashCodeOverrideForMatching<R>(rightObject
-                                        , specs.getFieldAccessorsForRight()
-                                        , specs.getFieldAccessorsForLeft()))
+                                        , specs.getFieldsForRight()
+                                        , specs.getFieldsForLeft()))
                 ).collect(Collectors.toList());
 
 

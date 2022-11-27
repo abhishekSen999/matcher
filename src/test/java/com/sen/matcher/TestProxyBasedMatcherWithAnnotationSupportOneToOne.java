@@ -1,8 +1,8 @@
 package com.sen.matcher;
 
+import codes.sen.matcher.AnnotationBasedMatcher;
 import codes.sen.matcher.Matched;
-import codes.sen.matcher.Matcher;
-import codes.sen.matcher.MatcherSpecifications;
+import codes.sen.matcher.annotation.MatchingKey;
 import lombok.Builder;
 import lombok.ToString;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class TestProxyBasedMatcher {
+public class TestProxyBasedMatcherWithAnnotationSupportOneToOne {
 
 
     @Test
@@ -32,32 +32,9 @@ public class TestProxyBasedMatcher {
                 CustomerOfCompanyB.builder().idInB("COMPANY_B_5").customerName("Customer_ABC5").govID("INDIA_05").build());
 
 
-        MatcherSpecifications<CustomerOfCompanyA, CustomerOfCompanyB> specifications = new MatcherSpecifications<CustomerOfCompanyA, CustomerOfCompanyB>() {
-            @Override
-            public Class<CustomerOfCompanyA> getClassOfLeftType() {
-                return CustomerOfCompanyA.class;
-            }
+        AnnotationBasedMatcher<CustomerOfCompanyA, CustomerOfCompanyB> matcher =  AnnotationBasedMatcher.newInstance(CustomerOfCompanyA.class , CustomerOfCompanyB.class);
 
-            @Override
-            public String[] getFieldsForLeft() {
-                return new String[]{"name", "govIssuedIdNo"};
-            }
-
-            @Override
-            public Class<CustomerOfCompanyB> getClassOfRightType() {
-                return CustomerOfCompanyB.class;
-            }
-
-            @Override
-            public String[] getFieldsForRight() {
-                return new String[]{"customerName", "govID"};
-            }
-        };
-
-
-        Matcher<CustomerOfCompanyA, CustomerOfCompanyB> matcher =  Matcher.newInstance(CustomerOfCompanyA.class , CustomerOfCompanyB.class);
-
-        Collection<Matched<CustomerOfCompanyA, CustomerOfCompanyB>> matchedObjs = matcher.match(companyACustomers, companyBCustomers, specifications);
+        Collection<Matched<CustomerOfCompanyA, CustomerOfCompanyB>> matchedObjs = matcher.match(companyACustomers, companyBCustomers);
 
         for (Matched matched: matchedObjs ) {
             List<CustomerOfCompanyA> customersOfCompanyA = matched.getLeftObjects();
@@ -80,7 +57,9 @@ public class TestProxyBasedMatcher {
     @ToString
     static class CustomerOfCompanyA {
         private String idInA;
+        @MatchingKey(order = 0)
         private String name;
+        @MatchingKey(order = 1)
         private String govIssuedIdNo;
 
         public String getIdInA() {
@@ -101,7 +80,9 @@ public class TestProxyBasedMatcher {
     static class CustomerOfCompanyB {
 
         private String idInB;
+        @MatchingKey(order = 0)
         private String customerName;
+        @MatchingKey(order = 1)
         private String govID;
 
         public String getIdInB() {
